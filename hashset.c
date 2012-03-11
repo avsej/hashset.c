@@ -53,7 +53,7 @@ void hashset_destroy(hashset_t set)
 	free(set);
 }
 
-static inline int hashset_add_member(hashset_t set, void *item)
+static int hashset_add_member(hashset_t set, void *item)
 {
 	size_t value = (size_t)item;
 	size_t ii = set->mask & (prime_1 * value);
@@ -71,7 +71,7 @@ static inline int hashset_add_member(hashset_t set, void *item)
 	return 1;
 }
 
-static inline void maybe_rehash(hashset_t set)
+static void maybe_rehash(hashset_t set)
 {
 	size_t *old_items;
 	size_t old_capacity, ii;

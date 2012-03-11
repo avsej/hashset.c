@@ -29,7 +29,7 @@ struct hashset_st {
 typedef struct hashset_st* hashset_t;
 
 /* create hashset instance */
-hashset_t hashset_create();
+hashset_t hashset_create(void);
 
 /* destroy hashset instance */
 void hashset_destroy(hashset_t set);
