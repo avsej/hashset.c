@@ -18,15 +18,15 @@
 #include <stdlib.h>
 
 struct hashset_st {
-	size_t nbits;
-	size_t mask;
+    size_t nbits;
+    size_t mask;
 
-	size_t capacity;
-	size_t *items;
-	size_t nitems;
+    size_t capacity;
+    size_t *items;
+    size_t nitems;
 };
 
-typedef struct hashset_st* hashset_t;
+typedef struct hashset_st *hashset_t;
 
 /* create hashset instance */
 hashset_t hashset_create(void);
