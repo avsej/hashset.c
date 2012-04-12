@@ -54,4 +54,3 @@ int hashset_remove(hashset_t set, void *item);
  * returns non-zero if the item exists and zero otherwise
  */
 int hashset_is_member(hashset_t set, void *item);
-

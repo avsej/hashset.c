@@ -6,6 +6,7 @@ static void trivial(void)
 {
     char *missing = "missing";
     char *items[] = {"zero", "one", "two", "three", NULL};
+    char *foo = "foo";
     size_t ii, nitems = 4;
     hashset_t set = hashset_create();
 
@@ -23,6 +24,13 @@ static void trivial(void)
     }
     assert(hashset_is_member(set, missing) == 0);
 
+    assert(hashset_remove(set, items[1]) == 1);
+    assert(hashset_num_items(set) == 3);
+    assert(hashset_remove(set, items[1]) == 0);
+
+    assert(hashset_add(set, foo) == 1);
+    assert(hashset_add(set, foo) == 0);
+
     hashset_destroy(set);
 }
 
@@ -34,4 +42,3 @@ int main(int argc, char *argv[])
     (void)argv;
     return 0;
 }
-
