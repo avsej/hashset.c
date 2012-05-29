@@ -69,11 +69,91 @@ static void test_exceptions(void)
     assert(hashset_add(set, (void *)1) == -1);
 }
 
+static void test_rehashing_items_placed_beyond_nitems(void)
+{
+    hashset_t set = hashset_create();
+
+    assert(hashset_add(set, (void *)20644128) == 1);
+    assert(hashset_add(set, (void *)21747760) == 1);
+    assert(hashset_add(set, (void *)17204864) == 1);
+    assert(hashset_add(set, (void *)22937440) == 1);
+    assert(hashset_add(set, (void *)14734272) == 1);
+    assert(hashset_add(set, (void *)13948320) == 1);
+    assert(hashset_add(set, (void *)18116496) == 1);
+    assert(hashset_add(set, (void *)18229952) == 1);
+    assert(hashset_add(set, (void *)20390128) == 1);
+    assert(hashset_add(set, (void *)23523264) == 1);
+    assert(hashset_add(set, (void *)22866784) == 1);
+    assert(hashset_add(set, (void *)17501248) == 1);
+    assert(hashset_add(set, (void *)17168832) == 1);
+    assert(hashset_add(set, (void *)13389824) == 1);
+    assert(hashset_add(set, (void *)15795136) == 1);
+    assert(hashset_add(set, (void *)15154464) == 1);
+    assert(hashset_add(set, (void *)22507840) == 1);
+    assert(hashset_add(set, (void *)22977920) == 1);
+    assert(hashset_add(set, (void *)20527584) == 1);
+    assert(hashset_add(set, (void *)21557872) == 1);
+    assert(hashset_add(set, (void *)23089952) == 1);
+    assert(hashset_add(set, (void *)21606240) == 1);
+    assert(hashset_add(set, (void *)25168704) == 1);
+    assert(hashset_add(set, (void *)25198096) == 1);
+    assert(hashset_add(set, (void *)25248000) == 1);
+    assert(hashset_add(set, (void *)25260976) == 1);
+    assert(hashset_add(set, (void *)25905520) == 1);
+    assert(hashset_add(set, (void *)25934608) == 1);
+    assert(hashset_add(set, (void *)26015264) == 1);
+    assert(hashset_add(set, (void *)26044352) == 1);
+    assert(hashset_add(set, (void *)24784800) == 1);
+    assert(hashset_add(set, (void *)24813888) == 1);
+    assert(hashset_add(set, (void *)24663936) == 1);
+    assert(hashset_add(set, (void *)24693536) == 1);
+    assert(hashset_add(set, (void *)24743792) == 1);
+    assert(hashset_add(set, (void *)24756480) == 1);
+
+    assert(hashset_is_member(set, (void *)20644128) == 1);
+    assert(hashset_is_member(set, (void *)21747760) == 1);
+    assert(hashset_is_member(set, (void *)17204864) == 1);
+    assert(hashset_is_member(set, (void *)22937440) == 1);
+    assert(hashset_is_member(set, (void *)14734272) == 1);
+    assert(hashset_is_member(set, (void *)13948320) == 1);
+    assert(hashset_is_member(set, (void *)18116496) == 1);
+    assert(hashset_is_member(set, (void *)18229952) == 1);
+    assert(hashset_is_member(set, (void *)20390128) == 1);
+    assert(hashset_is_member(set, (void *)23523264) == 1);
+    assert(hashset_is_member(set, (void *)22866784) == 1);
+    assert(hashset_is_member(set, (void *)17501248) == 1);
+    assert(hashset_is_member(set, (void *)17168832) == 1);
+    assert(hashset_is_member(set, (void *)13389824) == 1);
+    assert(hashset_is_member(set, (void *)15795136) == 1);
+    assert(hashset_is_member(set, (void *)15154464) == 1);
+    assert(hashset_is_member(set, (void *)22507840) == 1);
+    assert(hashset_is_member(set, (void *)22977920) == 1);
+    assert(hashset_is_member(set, (void *)20527584) == 1);
+    assert(hashset_is_member(set, (void *)21557872) == 1);
+    assert(hashset_is_member(set, (void *)23089952) == 1);
+    assert(hashset_is_member(set, (void *)21606240) == 1);
+    assert(hashset_is_member(set, (void *)25168704) == 1);
+    assert(hashset_is_member(set, (void *)25198096) == 1);
+    assert(hashset_is_member(set, (void *)25248000) == 1);
+    assert(hashset_is_member(set, (void *)25260976) == 1);
+    assert(hashset_is_member(set, (void *)25905520) == 1);
+    assert(hashset_is_member(set, (void *)25934608) == 1);
+    assert(hashset_is_member(set, (void *)26015264) == 1);
+    assert(hashset_is_member(set, (void *)26044352) == 1);
+    assert(hashset_is_member(set, (void *)24784800) == 1);
+    assert(hashset_is_member(set, (void *)24813888) == 1);
+    assert(hashset_is_member(set, (void *)24663936) == 1);
+    assert(hashset_is_member(set, (void *)24693536) == 1);
+    assert(hashset_is_member(set, (void *)24743792) == 1);
+    assert(hashset_is_member(set, (void *)24756480) == 1);
+}
+
 int main(int argc, char *argv[])
 {
     trivial();
     test_gaps();
     test_exceptions();
+    test_rehashing_items_placed_beyond_nitems();
 
     (void)argc;
     (void)argv;
