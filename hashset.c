@@ -18,8 +18,8 @@
 #include "hashset.h"
 #include <assert.h>
 
-static const int prime_1 = 73;
-static const int prime_2 = 5009;
+static const unsigned int prime_1 = 73;
+static const unsigned int prime_2 = 5009;
 
 hashset_t hashset_create()
 {
@@ -29,7 +29,7 @@ hashset_t hashset_create()
         return NULL;
     }
     set->nbits = 3;
-    set->capacity = 1 << set->nbits;
+    set->capacity = (size_t)(1 << set->nbits);
     set->mask = set->capacity - 1;
     set->items = calloc(set->capacity, sizeof(size_t));
     if (set->items == NULL) {
@@ -83,11 +83,11 @@ static void maybe_rehash(hashset_t set)
     size_t old_capacity, ii;
 
 
-    if ((float)set->nitems >= set->capacity * 0.85) {
+    if ((float)set->nitems >= (size_t)((double)set->capacity * 0.85)) {
         old_items = set->items;
         old_capacity = set->capacity;
         set->nbits++;
-        set->capacity = 1 << set->nbits;
+        set->capacity = (size_t)(1 << set->nbits);
         set->mask = set->capacity - 1;
         set->items = calloc(set->capacity, sizeof(size_t));
         set->nitems = 0;
