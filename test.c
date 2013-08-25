@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <assert.h>
+#include <string.h>
 #include "hashset.h"
+#include "hashset_itr.h"
 
 static void trivial(void)
 {
@@ -148,12 +150,54 @@ static void test_rehashing_items_placed_beyond_nitems(void)
     assert(hashset_is_member(set, (void *)24756480) == 1);
 }
 
+
+static void test_iterating(void)
+{
+    hashset_t set = hashset_create();
+    hashset_itr_t iter = hashset_iterator(set);
+    int step;
+
+    /* fill the hashset */
+    hashset_add(set, (void *)"Bob");
+    hashset_add(set, (void *)"Steve");
+    hashset_add(set, (void *)"Karen");
+    hashset_add(set, (void *)"Ellen");
+
+    step = 0;
+
+    while(hashset_iterator_has_next(iter))
+    {
+      if(step == 0)
+      {
+        assert(strncmp((char *)hashset_iterator_value(iter), "Karen", 5) == 0);
+      }
+      if(step == 1)
+      {
+        assert(strncmp((char *)hashset_iterator_value(iter), "Steve", 5) == 0);
+      }
+      if(step == 2)
+      {
+        assert(strncmp((char *)hashset_iterator_value(iter), "Bob", 3) == 0);
+      }
+      if(step == 3)
+      {
+        assert(strncmp((char *)hashset_iterator_value(iter), "Ellen", 5) == 0);
+      }
+      hashset_iterator_next(iter);
+      step++;
+    }
+    assert(hashset_iterator_has_next(iter) == 0);
+    assert(hashset_iterator_next(iter) == -1);
+}
+
+
 int main(int argc, char *argv[])
 {
     trivial();
     test_gaps();
     test_exceptions();
     test_rehashing_items_placed_beyond_nitems();
+    test_iterating();
 
     (void)argc;
     (void)argv;
