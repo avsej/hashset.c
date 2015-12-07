@@ -28,4 +28,4 @@ reformat:
                --align-pointer=name \
                *.[ch]
 
-.PHONY: clean
+.PHONY: clean reformat
