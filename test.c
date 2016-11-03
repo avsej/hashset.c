@@ -190,6 +190,25 @@ static void test_iterating(void)
     assert(hashset_iterator_next(iter) == -1);
 }
 
+static void test_fill_with_deleted_items()
+{
+    char *s = "some string";
+    hashset_t set = hashset_create();
+    if (set == NULL)
+        abort();
+
+    /* fill `set` with deleted items */
+    for (int i = 0; i < 8; ++i)
+    {
+        hashset_add(set, s + i);
+        hashset_remove(set, s + i);
+    }
+
+    /* this should not cause an infinite loop */
+    assert(hashset_is_member(set, s) == 0);
+
+    hashset_destroy(set);
+}
 
 int main(int argc, char *argv[])
 {
@@ -198,6 +217,7 @@ int main(int argc, char *argv[])
     test_exceptions();
     test_rehashing_items_placed_beyond_nitems();
     test_iterating();
+    test_fill_with_deleted_items();
 
     (void)argc;
     (void)argv;

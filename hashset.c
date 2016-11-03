@@ -37,6 +37,7 @@ hashset_t hashset_create()
         return NULL;
     }
     set->nitems = 0;
+    set->n_deleted_items = 0;
     return set;
 }
 
@@ -73,6 +74,9 @@ static int hashset_add_member(hashset_t set, void *item)
         }
     }
     set->nitems++;
+    if (set->items[ii] == 1) {
+        set->n_deleted_items--;
+    }
     set->items[ii] = value;
     return 1;
 }
@@ -83,7 +87,7 @@ static void maybe_rehash(hashset_t set)
     size_t old_capacity, ii;
 
 
-    if ((float)set->nitems >= (size_t)((double)set->capacity * 0.85)) {
+    if (set->nitems + set->n_deleted_items >= (double)set->capacity * 0.85) {
         old_items = set->items;
         old_capacity = set->capacity;
         set->nbits++;
@@ -91,6 +95,7 @@ static void maybe_rehash(hashset_t set)
         set->mask = set->capacity - 1;
         set->items = calloc(set->capacity, sizeof(size_t));
         set->nitems = 0;
+        set->n_deleted_items = 0;
         assert(set->items);
         for (ii = 0; ii < old_capacity; ii++) {
             hashset_add_member(set, (void *)old_items[ii]);
@@ -115,6 +120,7 @@ int hashset_remove(hashset_t set, void *item)
         if (set->items[ii] == value) {
             set->items[ii] = 1;
             set->nitems--;
+            set->n_deleted_items++;
             return 1;
         } else {
             ii = set->mask & (ii + prime_2);

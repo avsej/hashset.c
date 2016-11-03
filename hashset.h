@@ -31,6 +31,7 @@ extern "C" {
         size_t capacity;
         size_t *items;
         size_t nitems;
+        size_t n_deleted_items;
     };
 
     typedef struct hashset_st *hashset_t;
