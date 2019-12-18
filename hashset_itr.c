@@ -42,14 +42,14 @@ int hashset_iterator_has_next(hashset_itr_t itr)
   size_t index;
 
   /* empty or end of the set */
-  if (itr->set->nitems == 0 || itr->index == itr->set->capacity - 1)
+  if (itr->set->nitems == 0 || itr->index == itr->set->capacity)
     return 0;
 
   /* peek to find another entry */
   index = itr->index;
-  while(index <= itr->set->capacity -1)
+  while(index < itr->set->capacity)
   {
-    size_t value = itr->set->items[index];
+    size_t value = itr->set->items[index++];
     if(value != 0)
       return 1;
   }
